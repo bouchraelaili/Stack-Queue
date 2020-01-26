@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Queue</title>
+    
+    <script type="text/javascript">
+        class Queue{
+    constructor(){
+        this.pointer = this.holder = this.bottom = null;
+    }
+    queue(data){
+        if(!this.bottom){
+            this.pointer = this.holder = this.bottom = new Element(data);
+            return;
+        }
+        let temp = this.holder;
+        this.holder = this.holder.next = new Element(data);
+        this.holder.previous = temp;
+    }
+
+    dequeue(){
+        if(this.pointer && this.pointer === this.bottom){
+            this.pointer = this.bottom.next;
+        }
+        if(this.bottom && this.bottom.next){
+            this.bottom = this.bottom.next;
+            this.bottom.previous = null;
+        }else{
+            this.pointer = this.holder = this.bottom = null;
+        }
+    }
+    next(){
+        if(this.pointer && this.pointer.next){
+            this.pointer = this.pointer.next;
+        }
+    }
+    previous(){
+        if(this.pointer && this.pointer.previous){
+            this.pointer = this.pointer.previous;
+        }
+    }
+    show(){
+        if(this.pointer){
+            return this.pointer.data;
+        }
+        return "No Data Yet";
+    }
+}
+
+class Element{
+    constructor(data, next, previous){
+        this.data = data;
+        this.next = next || null;
+        this.previous = previous || null;
+    }
+}
+
+let qu = new Queue();
+
+function queue(){
+    qu.queue(document.getElementById('data').value);
+    document.getElementById('screen').innerHTML = qu.show();
+}
+
+function dequeue(){
+    qu.dequeue();
+    document.getElementById('screen').innerHTML = qu.show();
+}
+
+function next(){
+    qu.next();
+    document.getElementById('screen').innerHTML = qu.show();
+}
+
+function previous(){
+    qu.previous();
+    document.getElementById('screen').innerHTML = qu.show();
+}
+    </script>
+    <style type="text/css">
+    body{
+        background-color: black;
+    }
+    input{
+        width: 400px;
+        height: 50px;
+       
+        padding-left: 20%;
+    }
+    button{
+        width: 100px;
+        height: 50px;
+        background-color: red;
+        border-color: red;
+        font-weight: bold;
+        color: white;
+        margin-left: -47%;
+        margin-top: 3%;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div  style="padding-left: 36%;padding-top: 10%">
+            <input id="data" type="text"> <br><center>
+            <button onclick="queue();">Queue</button>
+            <button onclick="dequeue();">Dequeue</button><br>
+            <button style="margin-left: -93px;margin-top: 4%;" onclick="previous();">&larr;</button><br>
+            <p id="screen" id="data" style="color: white;margin-left: -47%;margin-top: 1%;">No Data </p>
+            <button  style="margin-right:38%;margin-top: -700%;"onclick="next();">&rarr;</button>
+        </div></center>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

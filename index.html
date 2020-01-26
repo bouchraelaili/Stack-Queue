@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stack</title>
+    
+    <script type="text/javascript">
+        class Stack {
+    constructor() {
+        this.current = this.top = null;
+
+    }
+    push(data) {
+        if (!this.top) {
+            this.current = this.top = new Element(data);
+        } else {
+            let tempElem = this.top;
+            tempElem.front = this.top = new Element(data, tempElem, null);
+        }
+    }
+    pop() {
+        if (this.top && this.top === this.current) {
+            this.current = this.top.back;
+        }
+        if (this.top && this.top.back) {
+            this.top = this.top.back;
+            this.top.front = null;
+        } else {
+            this.top = this.current = null;
+        }
+    }
+
+    moveNext() {
+        if (this.current && this.current.front)
+            this.current = this.current.front;
+    }
+    moveBack() {
+        if (this.current && this.current.back)
+            this.current = this.current.back;
+    }
+    showCurrent() {
+        if (this.current)
+            return this.current.data;
+        else
+            return "No Data Yet";
+    }
+}
+
+class Element {
+    constructor(data, back, front) {
+        this.data = data;
+        this.back = back || null;
+        this.front = front || null;
+    }
+}
+
+let stack = new Stack();
+document.getElementById('data').innerHTML = stack.showCurrent();
+
+function push() {
+    stack.push(document.getElementById('elem').value);
+    document.getElementById('data').innerHTML = stack.showCurrent();
+}
+
+function pop() {
+    stack.pop();
+    document.getElementById('data').innerHTML = stack.showCurrent();
+}
+
+function next() {
+    stack.moveNext();
+    document.getElementById('data').innerHTML = stack.showCurrent();
+}
+
+function back() {
+    stack.moveBack();
+    document.getElementById('data').innerHTML = stack.showCurrent();
+}
+    </script>
+</head>
+<style type="text/css">
+    body{
+        background-color: black;
+    }
+    input{
+        width: 400px;
+        height: 50px;
+       
+        padding-left: 20%;
+    }
+    button{
+        width: 100px;
+        height: 50px;
+        background-color: red;
+        border-color: red;
+        font-weight: bold;
+        color: white;
+        margin-left: -47%;
+        margin-top: 3%;
+    }
+</style>
+<body>
+    <div >
+        <div style="padding-left: 36%;padding-top: 10%">
+
+            <input id="elem" type="text"><br><center>
+            <button onclick="push();">Push</button>
+            <button onclick="pop();">Pop</button><br>
+            <button onclick="back();">&uarr;</button>
+            <p id="data" style="color: white;margin-left: -47%;margin-top: 3%;">No Data</p>
+            <button onclick="next();">&darr;</button></center>
+        </div>
+
+
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
